@@ -21,8 +21,7 @@ bool HTU21D::begin(void)
 	return(read_user_register() == 0x2); // 0x2 is the default value of the user register
 }
 
-float readHumidity(void)
-{
+float readHumidity(){
 	Wire.beginTransmission(HTDU21D_ADDRESS);
 	Wire.write(TRIGGER_HUMD_MEASURE_NOHOLD);
 	Wire.endTransmission();
@@ -37,7 +36,7 @@ float readHumidity(void)
 	while(!Wire.available()){
 		counter++;
 		delay(1);
-		if(counter > 100) return 998; //after 100ms consider I2C timeout
+		if(counter > 100) return HTU21D_I2C_TIMEOUT; //after 100ms consider I2C timeout
 	}
 
 	uint16_t h = Wire.read();
@@ -46,7 +45,7 @@ float readHumidity(void)
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	//if(checkCRC(h, crc) != 0) return(999);
+	//if(checkCRC(h, crc) != 0) return(HTU21D_BAD_CRC);
 
 	h &= 0xFFFC; // zero the status bits
 	float hum = h;
@@ -57,8 +56,7 @@ float readHumidity(void)
 	return hum;
 }
 
-float readTemperature(void)
-{
+float readTemperature(){
 	Wire.beginTransmission(HTDU21D_ADDRESS);
 	Wire.write(TRIGGER_TEMP_MEASURE_NOHOLD);
 	Wire.endTransmission();
@@ -73,7 +71,7 @@ float readTemperature(void)
 	while(!Wire.available()){
 		counter++;
 		delay(1);
-		if(counter > 100) return 998; //after 100ms consider I2C timeout
+		if(counter > 100) return HTU21D_I2C_TIMEOUT; //after 100ms consider I2C timeout
 	}
 
 	uint16_t t = Wire.read();
@@ -82,7 +80,7 @@ float readTemperature(void)
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	//if( checkCRC(t, crc) != 0) return(999);
+	//if( checkCRC(t, crc) != 0) return(HTU21D_BAD_CRC);
 
 	t &= 0xFFFC; // zero the status bits
 	float temp = t;
@@ -107,14 +105,14 @@ void HTU21D::setResolution(byte resolution)
   Wire.endTransmission();
 }
 
-void HTU21D::reset(void){
+void HTU21D::reset(){
 	Wire.beginTransmission(HTDU21D_ADDRESS);
 	Wire.write(SOFT_RESET);
 	Wire.endTransmission();
 	delay(20);
 }
 
-byte HTU21D::read_user_register(void)
+byte HTU21D::read_user_register()
 {
 	//Request the user register
 	Wire.beginTransmission(HTDU21D_ADDRESS);
@@ -127,8 +125,7 @@ byte HTU21D::read_user_register(void)
 	return(Wire.read());
 }
 
-byte HTU21D::checkCRC(uint16_t message, uint8_t crc)
-{
+byte HTU21D::checkCRC(uint16_t message, uint8_t crc){
 	uint32_t reste = (uint32_t)message << 8;
 	reste |= crc;
 
