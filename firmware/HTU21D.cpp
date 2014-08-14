@@ -46,7 +46,7 @@ float readHumidity(void)
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	if(checkCRC(h, crc) != 0) return(999);
+	//if(checkCRC(h, crc) != 0) return(999);
 
 	h &= 0xFFFC; // zero the status bits
 	float hum = h;
@@ -82,7 +82,7 @@ float readTemperature(void)
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	if( checkCRC(t, crc) != 0) return(999);
+	//if( checkCRC(t, crc) != 0) return(999);
 
 	t &= 0xFFFC; // zero the status bits
 	float temp = t;
