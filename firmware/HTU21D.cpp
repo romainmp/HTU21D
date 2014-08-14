@@ -21,7 +21,7 @@ bool HTU21D::begin(void)
 	return(read_user_register() == 0x2); // 0x2 is the default value of the user register
 }
 
-float readHumidity(){
+float HTU21D::readHumidity(){
 	Wire.beginTransmission(HTDU21D_ADDRESS);
 	Wire.write(TRIGGER_HUMD_MEASURE_NOHOLD);
 	Wire.endTransmission();
@@ -45,7 +45,7 @@ float readHumidity(){
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	//if(checkCRC(h, crc) != 0) return(HTU21D_BAD_CRC);
+	if(checkCRC(h, crc) != 0) return(HTU21D_BAD_CRC);
 
 	h &= 0xFFFC; // zero the status bits
 	float hum = h;
@@ -56,7 +56,7 @@ float readHumidity(){
 	return hum;
 }
 
-float readTemperature(){
+float HTU21D::readTemperature(){
 	Wire.beginTransmission(HTDU21D_ADDRESS);
 	Wire.write(TRIGGER_TEMP_MEASURE_NOHOLD);
 	Wire.endTransmission();
@@ -80,7 +80,7 @@ float readTemperature(){
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	//if( checkCRC(t, crc) != 0) return(HTU21D_BAD_CRC);
+	if( checkCRC(t, crc) != 0) return(HTU21D_BAD_CRC);
 
 	t &= 0xFFFC; // zero the status bits
 	float temp = t;
