@@ -44,14 +44,14 @@ public:
 
 	// Public Functions
 	bool begin();
-	float readHumidity(void);
-	float readTemperature(void);
+	float readHumidity();
+	float readTemperature();
 	void setResolution(byte resBits);
-	void reset(void);
+	void reset();
 
 private:
 	//Private Functions
 
-	byte read_user_register(void);
+	byte read_user_register();
 	byte checkCRC(uint16_t message_from_sensor, uint8_t check_value_from_sensor);
 };
