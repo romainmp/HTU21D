@@ -30,7 +30,7 @@ float readHumidity(void)
 	// Wait for the sensor to measure
 	delay(18); // 16ms measure time for 12bit measures
 
-	Wire.requestFrom(HTU21D_I2CADDR, 3);
+	Wire.requestFrom(HTDU21D_ADDRESS, 3);
 
 	//Wait for data to become available
 	int counter = 0;
@@ -46,7 +46,7 @@ float readHumidity(void)
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	if(check_crc(h, crc) != 0) return(999);
+	if(checkCRC(h, crc) != 0) return(999);
 
 	h &= 0xFFFC; // zero the status bits
 	float hum = h;
@@ -66,7 +66,7 @@ float readTemperature(void)
 	// Wait for the sensor to measure
 	delay(55); // 50ms measure time for 14bit measures
 
-	Wire.requestFrom(HTU21D_I2CADDR, 3);
+	Wire.requestFrom(HTDU21D_ADDRESS, 3);
 
 	//Wait for data to become available
 	int counter = 0;
@@ -82,7 +82,7 @@ float readTemperature(void)
 
 	// CRC check
 	uint8_t crc = Wire.read();
-	if( check_crc(t, crc) != 0) return(999);
+	if( checkCRC(t, crc) != 0) return(999);
 
 	t &= 0xFFFC; // zero the status bits
 	float temp = t;
@@ -127,7 +127,7 @@ byte HTU21D::read_user_register(void)
 	return(Wire.read());
 }
 
-byte HTU21D::check_crc(uint16_t message, uint8_t crc)
+byte HTU21D::checkCRC(uint16_t message, uint8_t crc)
 {
 	uint32_t reste = (uint32_t)message << 8;
 	reste |= crc;

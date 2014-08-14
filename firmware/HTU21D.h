@@ -49,5 +49,5 @@ private:
 	//Private Functions
 
 	byte read_user_register(void);
-	byte check_crc(uint16_t message_from_sensor, uint8_t check_value_from_sensor);
+	byte checkCRC(uint16_t message_from_sensor, uint8_t check_value_from_sensor);
 };
