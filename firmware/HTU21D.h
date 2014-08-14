@@ -32,6 +32,10 @@ Licence: GPL v3
 
 #define CRC_POLY 0x988000 // Shifted Polynomial for CRC check
 
+// Error codes
+#define HTU21D_I2C_TIMEOUT 	998
+#define HTU21D_BAD_CRC		999
+
 class HTU21D {
 
 public:
