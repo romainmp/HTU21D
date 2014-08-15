@@ -11,8 +11,9 @@ HTU21D::HTU21D(){
 
 bool HTU21D::begin(void)
 {
-	// Join the I2C bus as master
-	Wire.begin();
+	// Only join the I2C bus as master if needed
+	if(! Wire.isEnabled())
+		Wire.begin();
 
 	// Reset the sensor
 	reset();
