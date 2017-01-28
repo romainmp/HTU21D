@@ -1,5 +1,5 @@
 /*
-Spark Core HTU21D Temperature / Humidity Sensor Library
+Particle library for HTU21D Temperature / Humidity Sensor
 By: Romain MP
 Licence: GPL v3
 */
@@ -98,7 +98,7 @@ void HTU21D::setResolution(byte resolution)
   userRegister &= 0b01111110; //Turn off the resolution bits
   resolution &= 0b10000001; //Turn off all other bits but resolution bits
   userRegister |= resolution; //Mask in the requested resolution bits
-  
+
   //Request a write to user register
   Wire.beginTransmission(HTDU21D_ADDRESS);
   Wire.write(WRITE_USER_REG); //Write to the user register
@@ -119,7 +119,7 @@ byte HTU21D::read_user_register()
 	Wire.beginTransmission(HTDU21D_ADDRESS);
 	Wire.write(READ_USER_REG);
 	Wire.endTransmission();
-  
+
 	//Read result
 	Wire.requestFrom(HTDU21D_ADDRESS, 1);
 
@@ -141,5 +141,3 @@ byte HTU21D::checkCRC(uint16_t message, uint8_t crc){
 
 	return (byte)reste;
 }
-
-

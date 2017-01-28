@@ -1,18 +1,12 @@
 /*
-Spark Core HTU21D Temperature / Humidity Sensor Library
+Particle library for HTU21D Temperature / Humidity Sensor
 By: Romain MP
 Licence: GPL v3
 */
 
-// Make library cross-compatiable
-// with Arduino, GNU C++ for tests, and Spark.
-//#if defined(ARDUINO) && ARDUINO >= 100
-//#include "Arduino.h"
-//#elif defined(SPARK)
-//#include "application.h"
-//#endif
+#ifndef _HTU21D_H
+#define _HTU21D_H
 
-// TEMPORARY UNTIL the stuff that supports the code above is deployed to the build IDE
 #include "application.h"
 
 #define HTDU21D_ADDRESS 0x40
@@ -55,3 +49,5 @@ private:
 	byte read_user_register();
 	byte checkCRC(uint16_t message_from_sensor, uint8_t check_value_from_sensor);
 };
+
+#endif

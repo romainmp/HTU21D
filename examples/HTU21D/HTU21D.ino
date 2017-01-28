@@ -1,4 +1,4 @@
-#include "HTU21D/HTU21D.h"
+#include "HTU21D.h"
 
 HTU21D htu = HTU21D();
 
